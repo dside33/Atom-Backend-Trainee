@@ -2,6 +2,7 @@
 
 ## Описание
 API атом чата, в котором пользователи могут общаться друг с другом в приватных каналах.
+ТЗ: https://github.com/notafavor/test-cases/blob/main/case_2.md
 
 ## Требования
 - Docker и Docker Compose
