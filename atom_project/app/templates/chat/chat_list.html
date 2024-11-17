@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Chat List{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h2 class="text-center mb-4">Welcome, {{ username }}!</h2>
+
+  <div class="text-end mb-3">
+    <a href="/chat/new" class="btn btn-primary">Create New Chat</a>
+  </div>
+
+  {% if chat_lst %}
+  <div class="list-group">
+    {% for chat in chat_lst %}
+    <a href="/chat/my/{{ chat.id }}" class="list-group-item list-group-item-action">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">Chat # {{ chat['id'] }}</h5>
+        <small class="text-muted">Participants:  {{ chat['user1_id'] }} &  {{ chat['user2_id'] }}</small>
+      </div>
+      <p class="mb-1">Click to join this chat</p>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="alert alert-info" role="alert">
+    No chats available. Start a new conversation!
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

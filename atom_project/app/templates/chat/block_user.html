@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Блокировка пользователя{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h2 class="text-center mb-4">Блокировка пользователя</h2>
+  <form id="blockUserForm" method="post" action="/chat/block_user/">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email пользователя</label>
+      <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+    <button type="submit" class="btn btn-danger">Заблокировать</button>
+  </form>
+</div>
+{% endblock %}

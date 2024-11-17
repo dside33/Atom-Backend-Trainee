@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Создание нового чата{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h2 class="text-center mb-4">Создать новый чат</h2>
+  
+  <form action="/chat/new" method="post">
+    <div class="mb-3">
+      <label for="other_user_id" class="form-label">ID пользователя</label>
+      <input 
+        type="number" 
+        class="form-control" 
+        id="other_user_id" 
+        name="other_user_id" 
+        placeholder="Введите ID пользователя" 
+        required
+      >
+    </div>
+    <button type="submit" class="btn btn-primary">Создать чат</button>
+  </form>
+</div>
+{% endblock %}

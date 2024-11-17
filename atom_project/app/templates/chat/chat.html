@@ -1,0 +1,69 @@
+{% extends "base.html" %} 
+{% block title %}Chat Room{% endblock %} 
+
+{% block content %}
+<div class="container my-5">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white text-center">
+      <h1 class="mb-0">WebSocket Chat</h1>
+    </div>
+    <div class="card-body">
+      <h2 class="text-muted text-center">
+        You: <span id="ws-id" class="fw-bold"></span>
+      </h2>
+      
+      {% if not can_write %}
+      <div class="alert alert-danger text-center" role="alert">
+        You are blocked from sending messages.
+      </div>
+      {% else %}
+      <form class="d-flex mt-4" onsubmit="sendMessage(event)">
+        <input
+          type="text"
+          id="messageText"
+          class="form-control me-2"
+          placeholder="Type your message..."
+          autocomplete="off"
+          required
+        />
+        <button type="submit" class="btn btn-primary">Send</button>
+      </form>
+      {% endif %}
+      <ul id="messages" class="list-unstyled mt-3">
+        {% for message in messages %}
+        <li class="list-group-item">
+          <strong>{{ sender_names[message.sender_id] }}:</strong> {{ message.content }}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  var client_id = "{{ username }}";
+  document.querySelector("#ws-id").textContent = client_id;
+  var ws = new WebSocket(`ws://127.0.0.1:8000/chat/my/{{ chat_id }}/ws/${client_id}`);
+
+
+  ws.onmessage = function (event) {
+    var messages = document.getElementById("messages");
+    var message = document.createElement("li");
+    message.className = "list-group-item";
+    var content = document.createTextNode(event.data);
+    message.appendChild(content);
+    messages.appendChild(message);
+  };
+
+  function sendMessage(event) {
+    var input = document.getElementById("messageText");
+    if (input.value.trim() !== "") {
+      ws.send(input.value);
+      input.value = "";
+    }
+    event.preventDefault();
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
